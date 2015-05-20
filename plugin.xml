@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Peg4d Editor"
+            extensions="peg,p4d,nez"
+            icon="icons/sample.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.peg4d.editorplugin.editors.PegEditor"
+            id="jp.ac.ynu.peg4deditorplugin.editors.Peg4dEditor">
+      </editor>
+   </extension>
+   
+    <extension
+         point="org.eclipse.ui.console.consolePatternMatchListeners">
+      <consolePatternMatchListener
+            class="org.peg4d.editorplugin.editors.PegConsolePatternMatcher"
+            id="jp.ac.ynu.peg4deditorplugin.editors.PegConsolePatternMatcher"
+            regex="\(.*:[0-9]*\)">
+            <enablement> </enablement>
+      </consolePatternMatchListener>
+   </extension> 
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="peg4d-editor-plugin.context"
+            name="Peg4d Editor context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="peg4d-editor-plugin.jumplink-command"
+            name="Peg4d open declaration">
+      </command>
+   </extension>
+   <extension
+        point="org.eclipse.ui.commands">
+     <category
+           name="Peg4d Editor command"
+           id="peg4d-editor-plugin.category">
+     </category>
+     <command
+           categoryId="peg4d-editor-plugin.category"
+           id="peg4d-editor-plugin.jumplink-command"
+           name="Peg4d open declaration">
+     </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.peg4d.editorplugin.editors.PegHyperlinkHandler"
+            commandId="peg4d-editor-plugin.jumplink-command">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="peg4d-editor-plugin.jumplink-command"
+            contextId="peg4d-editor-plugin.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F3">
+      </key>
+   </extension>
+   
+   <extension
+        point="org.eclipse.ui.preferencePages">
+   <page
+           class="org.peg4d.editorplugin.preference.Peg4dPreferencePage"
+           id="peg4d-editor-plugin.page"
+           name="Peg4d Editor"/>
+   </extension>
+   <extension 
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.peg4d.editorplugin.preference.Peg4dPreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            id="Peg4dEditorPlug-in.viewerContribution1"
+            targetID="#TextEditorContext">
+         <action
+               class="org.peg4d.editorplugin.editors.openAction"
+               id="org.peg4d.editroplugin.editors.openAction"
+               label="Open Declaration"
+               menubarPath="additions">
+         </action>
+      </viewerContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerType="org.eclipse.core.resources.textmarker"
+            name="org.peg4d.editorplugin.occurences"
+            super="org.eclipse.jdt.ui.occurrences">
+      </type>
+   </extension>
+   <extension
+         id="org.peg4d.editroplugin.markers"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.textmarker"/>
+            <super type="org.eclipse.core.resources.marker"/>
+      <persistent value="true"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="org.peg4d.editorplugin.occurences"
+            colorPreferenceValue="255,255,0"
+            highlightPreferenceKey="clhighlight"
+            highlightPreferenceValue="true"
+            includeOnPreferencePage="true"
+            label="Peg4dAnnotation"
+            overviewRulerPreferenceKey="clruler"
+            overviewRulerPreferenceValue="true"
+            textPreferenceKey="cltext"
+            textStylePreferenceKey="clstyle"
+            textStylePreferenceValue="BOX"
+            verticalRulerPreferenceKey="clvartical"
+            verticalRulerPreferenceValue="true">
+      </specification>
+   </extension>
+   <extension point="org.eclipse.ui.editors.markerUpdaters"> 
+               <updater
+                       id="org.peg4d.editorplugin.MarkerUpdater"
+                       class="org.peg4d.editorplugin.editors.MarkerUpdater"
+                       markerType="org.peg4d.editroplugin.markers">
+               </updater>
+</extension>
+   <extension
+         point="org.eclipse.core.filebuffers.annotationModelCreation">
+      <factory
+		extensions="*"
+		class="org.eclipse.ui.texteditor.ResourceMarkerAnnotationModelFactory">
+	</factory>
+   </extension>:
+   
+</plugin>
