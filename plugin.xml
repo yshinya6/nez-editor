@@ -5,19 +5,19 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="Peg4d Editor"
+            name="Nez Editor"
             extensions="peg,p4d,nez"
             icon="icons/sample.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            class="org.peg4d.editorplugin.editors.PegEditor"
-            id="jp.ac.ynu.peg4deditorplugin.editors.Peg4dEditor">
+            class="nez.plugin.editors.NezEditor"
+            id="jp.ac.ynu.nezeditorplugin.editors.NezEditor">
       </editor>
    </extension>
    
     <extension
          point="org.eclipse.ui.console.consolePatternMatchListeners">
       <consolePatternMatchListener
-            class="org.peg4d.editorplugin.editors.PegConsolePatternMatcher"
+            class="nez.plugin.editors.NezConsolePatternMatcher"
             id="jp.ac.ynu.peg4deditorplugin.editors.PegConsolePatternMatcher"
             regex="\(.*:[0-9]*\)">
             <enablement> </enablement>
@@ -26,42 +26,42 @@
    <extension
          point="org.eclipse.ui.contexts">
       <context
-            id="peg4d-editor-plugin.context"
-            name="Peg4d Editor context"
+            id="nez-editor-plugin.context"
+            name="Nez Editor context"
             parentId="org.eclipse.ui.contexts.window">
       </context>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="peg4d-editor-plugin.jumplink-command"
-            name="Peg4d open declaration">
+            id="nez-editor-plugin.jumplink-command"
+            name="Nez open declaration">
       </command>
    </extension>
    <extension
         point="org.eclipse.ui.commands">
      <category
-           name="Peg4d Editor command"
-           id="peg4d-editor-plugin.category">
+           name="Nez Editor command"
+           id="nez-editor-plugin.category">
      </category>
      <command
-           categoryId="peg4d-editor-plugin.category"
-           id="peg4d-editor-plugin.jumplink-command"
-           name="Peg4d open declaration">
+           categoryId="nez-editor-plugin.category"
+           id="nez-editor-plugin.jumplink-command"
+           name="Nez open declaration">
      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.peg4d.editorplugin.editors.PegHyperlinkHandler"
-            commandId="peg4d-editor-plugin.jumplink-command">
+            class="nez.plugin.editors.NezHyperlinkHandler"
+            commandId="nez-editor-plugin.jumplink-command">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="peg4d-editor-plugin.jumplink-command"
-            contextId="peg4d-editor-plugin.context"
+            commandId="nez-editor-plugin.jumplink-command"
+            contextId="nez-editor-plugin.context"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F3">
       </key>
@@ -70,22 +70,22 @@
    <extension
         point="org.eclipse.ui.preferencePages">
    <page
-           class="org.peg4d.editorplugin.preference.Peg4dPreferencePage"
-           id="peg4d-editor-plugin.page"
-           name="Peg4d Editor"/>
+           class="nez.plugin.preference.NezPreferencePage"
+           id="nez-editor-plugin.page"
+           name="Nez Editor"/>
    </extension>
    <extension 
          point="org.eclipse.core.runtime.preferences">
-      <initializer class="org.peg4d.editorplugin.preference.Peg4dPreferenceInitializer"/>
+      <initializer class="nez.plugin.preference.NezPreferenceInitializer"/>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
       <viewerContribution
-            id="Peg4dEditorPlug-in.viewerContribution1"
+            id="NezEditorPlug-in.viewerContribution1"
             targetID="#TextEditorContext">
          <action
-               class="org.peg4d.editorplugin.editors.openAction"
-               id="org.peg4d.editroplugin.editors.openAction"
+               class="nez.plugin.editors.openAction"
+               id="nez.plugin.editors.openAction"
                label="Open Declaration"
                menubarPath="additions">
          </action>
@@ -95,12 +95,12 @@
          point="org.eclipse.ui.editors.annotationTypes">
       <type
             markerType="org.eclipse.core.resources.textmarker"
-            name="org.peg4d.editorplugin.occurences"
+            name="nez.plugin.occurences"
             super="org.eclipse.jdt.ui.occurrences">
       </type>
    </extension>
    <extension
-         id="org.peg4d.editroplugin.markers"
+         id="nez.plugin.markers"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.core.resources.textmarker"/>
@@ -110,12 +110,12 @@
    <extension
          point="org.eclipse.ui.editors.markerAnnotationSpecification">
       <specification
-            annotationType="org.peg4d.editorplugin.occurences"
+            annotationType="nez.plugin.occurences"
             colorPreferenceValue="255,255,0"
             highlightPreferenceKey="clhighlight"
             highlightPreferenceValue="true"
             includeOnPreferencePage="true"
-            label="Peg4dAnnotation"
+            label="NezAnnotation"
             overviewRulerPreferenceKey="clruler"
             overviewRulerPreferenceValue="true"
             textPreferenceKey="cltext"
@@ -127,9 +127,9 @@
    </extension>
    <extension point="org.eclipse.ui.editors.markerUpdaters"> 
                <updater
-                       id="org.peg4d.editorplugin.MarkerUpdater"
-                       class="org.peg4d.editorplugin.editors.MarkerUpdater"
-                       markerType="org.peg4d.editroplugin.markers">
+                       id="nez.plugin.MarkerUpdater"
+                       class="nez.plugin.editors.MarkerUpdater"
+                       markerType="nez.plugin.markers">
                </updater>
 </extension>
    <extension
