@@ -99,14 +99,6 @@ class labelRule implements IRule {
 			scanner.unread();
 			do {
 				c = scanner.read();
-				if (c == '[') {
-					c = scanner.read();
-					if (c == 'e') {
-						scanner.unread();
-						scanner.unread();
-						return token;
-					}
-				}
 				if (c == '=') {
 					scanner.unread();
 					return token;
@@ -127,7 +119,7 @@ class labelRule implements IRule {
 	}
 
 	protected Boolean isLetterPart(char c) {
-		return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
+		return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || (c == '_');
 	}
 
 	protected Boolean isWhiteSpace(char c) {
@@ -196,26 +188,30 @@ class funcRule implements IRule {
 	}
 }
 
-// class tokenRule2 {
-// private IToken token;
+//class publicRule implements IRule {
+//	IToken token;
 //
-// public tokenRule2(IToken token) {
-// Assert.isNotNull(token);
-// this.token = token;
-// }
+//	public publicRule(IToken token) {
+//		Assert.isNotNull(token);
+//		this.token = token;
+//	}
 //
-// public IToken evaluate() {
-// IDocument document = NezEUtil.getDocFromEditor(NezEUtil.getActiveFile());
-// String source = document.get();
-//
-// Pattern p = Pattern.compile("^[ \t]*" + "[a-zA-Z][a-zA-Z0-9]*"
-// + "(\\s*\\[[^\\]]*\\])?" + "\\s*=", Pattern.MULTILINE);
-// // Pattern p = Pattern.compile(word + "[\\s]*=");
-// Matcher m = p.matcher(source);
-// if (m.find()) {
-//
-// }
-// return token;
-// }
+//	@Override
+//	public IToken evaluate(ICharacterScanner scanner) {
+//		int c = scanner.read();
+//		if (c == 'p') {
+//			int[] word = new int[6];
+//			word[0] = 'p';
+//			for (int i = 0; i < 6; i++) {
+//				word[i] = scanner.read();
+//			}
+//			if (word.equals("public")) {
+//				scanner.unread();
+//				return Token.UNDEFINED;
+//			}
+//		}
+//		scanner.unread();
+//		return token;
+//	}
 //
 // }

@@ -131,7 +131,7 @@ public class NezEditor extends TextEditor implements IPropertyChangeListener {
 		// Note: The annotation type id specify that you want to create one of
 		// your
 		// annotations
-		SimpleMarkerAnnotation ma = new SimpleMarkerAnnotation("org.peg4d.editorplugin.occurences",
+		SimpleMarkerAnnotation ma = new SimpleMarkerAnnotation("nez.plugin.occurences",
 				marker);
 
 		// Finally add the new annotation to the model
@@ -184,11 +184,12 @@ public class NezEditor extends TextEditor implements IPropertyChangeListener {
 			e.printStackTrace();
 		}
 		validate(input.getFile(), document);
+		getSourceViewer().invalidateTextPresentation();
 	}
 
 	private void validate(IFile file, IDocument document) {
 		String sourceText = document.get();
-		NezEParser parser = new NezEParser(document.get());
+		NezEParser parser = new NezEParser(sourceText);
 		parser.parse();
 		ArrayList<ReportSet> reportList = parser.getReportList();
 		try {
@@ -247,10 +248,6 @@ public class NezEditor extends TextEditor implements IPropertyChangeListener {
 		marker.setAttribute(IMarker.LINE_NUMBER, lineNum);
 		marker.setAttribute(IMarker.CHAR_START, begin);
 		marker.setAttribute(IMarker.CHAR_END, end);
-	}
-	// collect report set from Parsing Expression in the rule
-	private void collectReportInfo(Production rule) {
-
 	}
 
 	public void refresh() {

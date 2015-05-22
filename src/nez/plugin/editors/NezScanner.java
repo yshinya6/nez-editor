@@ -12,11 +12,14 @@ import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.swt.SWT;
 
-class PEGScanner extends RuleBasedScanner {
+class NezScanner extends RuleBasedScanner {
 	ColorManager manager;
-
-	public PEGScanner(ColorManager manager) {
+	static final String[] NEZ_KEYWORD = {
+			"public", "import", "inline", "type", "grammar", "format", "define", "example"
+	};
+	public NezScanner(ColorManager manager) {
 		this.manager = manager;
 		IToken token = new Token(new TextAttribute(manager.getColor(INezColorConstants.DEFAULT)));
 		IToken connector = new Token(new TextAttribute(
@@ -34,20 +37,29 @@ class PEGScanner extends RuleBasedScanner {
 				manager.getColor(PreferenceConstants.COLOR_EXAMPLE)));
 		IToken function = new Token(new TextAttribute(
 				manager.getColor(PreferenceConstants.COLOR_FUNCTION)));
+		IToken keyword = new Token(new TextAttribute(
+				manager.getColor(PreferenceConstants.COLOR_KEYWORD), null, SWT.BOLD));
+		KeywordRule keywordRule = new KeywordRule(token);
+		keywordRule.addWords(NEZ_KEYWORD, keyword);
 
-		IRule[] rules = {new tagRule(tag), new ConnectorRule(connector), new labelRule(label),
+		IRule[] rules = {
+				keywordRule,
+				new labelRule(label),
+				new tagRule(tag),
+				new ConnectorRule(connector),
+				new MultiLineRule("'''", "'''", example),
 				new SingleLineRule("`", "`", value),
 				new SingleLineRule("\"", "\"", string), new SingleLineRule("'", "'", string),
 				new MultiLineRule("<", ">", function),
-				new MultiLineRule("[example:", "]", example),
 				new SingleLineRule("[", "]", character),
 				new WhitespaceRule(new NezWhitespaceDetector()),
-				/* new PegWordRule("@", connecter) */};
+		};
 
 		setRules(rules);
 	}
 
 	public void init() {
+		IToken token = new Token(new TextAttribute(manager.getColor(INezColorConstants.DEFAULT)));
 		IToken connector = new Token(new TextAttribute(
 				manager.getColor(PreferenceConstants.COLOR_CONNECTOR)));
 		IToken tag = new Token(new TextAttribute(manager.getColor(PreferenceConstants.COLOR_TAG)));
@@ -63,14 +75,23 @@ class PEGScanner extends RuleBasedScanner {
 				manager.getColor(PreferenceConstants.COLOR_EXAMPLE)));
 		IToken function = new Token(new TextAttribute(
 				manager.getColor(PreferenceConstants.COLOR_FUNCTION)));
+		IToken keyword = new Token(new TextAttribute(
+				manager.getColor(PreferenceConstants.COLOR_KEYWORD), null, SWT.BOLD));
+		KeywordRule keywordRule = new KeywordRule(token);
+		keywordRule.addWords(NEZ_KEYWORD, keyword);
 
-		IRule[] rules = {new tagRule(tag), new ConnectorRule(connector), new labelRule(label),
+		IRule[] rules = {
+				keywordRule,
+				new labelRule(label),
+				new tagRule(tag),
+				new ConnectorRule(connector),
+				new MultiLineRule("'''", "'''", example),
 				new SingleLineRule("`", "`", value),
 				new SingleLineRule("\"", "\"", string), new SingleLineRule("'", "'", string),
 				new funcRule(function),
-				new MultiLineRule("[example:", "]", example),
 				new SingleLineRule("[", "]", character),
-				new WhitespaceRule(new NezWhitespaceDetector()),};
+				new WhitespaceRule(new NezWhitespaceDetector()),
+		};
 		setRules(rules);
 	}
 }
@@ -85,11 +106,37 @@ class PegWordRule extends WordRule {
 class PegWordDetector implements IWordDetector {
 	@Override
 	public boolean isWordStart(char c) {
-		return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || (c == '@');
+		return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
 	}
 
 	@Override
 	public boolean isWordPart(char c) {
-		return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || (c == '@');
+		return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
+	}
+}
+
+class NezKeywordDetector implements IWordDetector {
+
+	@Override
+	public boolean isWordPart(char c) {
+		return ('a' <= c && c <= 'z');
+	}
+
+	@Override
+	public boolean isWordStart(char c) {
+		return (c == 'p' || c == 'i' || c == 't' || c == 'g' || c == 'f' || c == 'd' || c == 'e');
+	}
+
+}
+
+class KeywordRule extends WordRule {
+	public KeywordRule(IToken defaultT) {
+		super(new NezKeywordDetector(), defaultT);
+	}
+
+	public void addWords(String[] words, IToken token) {
+		for (String keyword : words) {
+			addWord(keyword, token);
+		}
 	}
 }

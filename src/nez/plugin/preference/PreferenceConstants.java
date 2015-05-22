@@ -11,4 +11,5 @@ public class PreferenceConstants {
 	public static final String COLOR_VALUE = "PEGEditor.Color.Value";
 	public static final String COLOR_LABEL = "PEGEdotor.Color.Label";
 	public static final String COLOR_FUNCTION = "PEGEditor.Color.Function";
+	public static final String COLOR_KEYWORD = "PEGEditor.Color.Keyword";
 }

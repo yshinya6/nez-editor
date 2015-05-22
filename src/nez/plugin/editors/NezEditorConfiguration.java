@@ -22,7 +22,7 @@ import org.eclipse.ui.texteditor.MarkerAnnotation;
 public class NezEditorConfiguration extends SourceViewerConfiguration {
 	private NezDoubleClickStrategy doubleClickStrategy;
 	private NezHyperlinkDetector pegHyperlinkDetector;
-	private PEGScanner scanner;
+	private NezScanner scanner;
 	private ColorManager colorManager;
 
 	public NezEditorConfiguration(ColorManager colorManager) {
@@ -42,9 +42,9 @@ public class NezEditorConfiguration extends SourceViewerConfiguration {
 		return doubleClickStrategy;
 	}
 
-	protected PEGScanner getPEGScanner() {
+	protected NezScanner getNezScanner() {
 		if (scanner == null) {
-			scanner = new PEGScanner(colorManager);
+			scanner = new NezScanner(colorManager);
 			scanner.setDefaultReturnToken(new Token(new TextAttribute(colorManager
 					.getColor(PreferenceConstants.COLOR_DEFAULT))));
 		}
@@ -52,7 +52,7 @@ public class NezEditorConfiguration extends SourceViewerConfiguration {
 	}
 
 	public void updatePreferences() {
-		getPEGScanner().init();
+		getNezScanner().init();
 		PresentationReconciler reconciler = new PresentationReconciler();
 		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(new TextAttribute(
 				colorManager.getColor(PreferenceConstants.COLOR_COMMENT)));
@@ -63,7 +63,7 @@ public class NezEditorConfiguration extends SourceViewerConfiguration {
 	@Override
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
-		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getPEGScanner());
+		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getNezScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(new TextAttribute(
