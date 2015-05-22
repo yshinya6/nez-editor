@@ -77,8 +77,10 @@ public class NezEditor extends TextEditor implements IPropertyChangeListener {
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
+
+		// for brace match
 		MatchingCharacterPainter painter = new MatchingCharacterPainter(getSourceViewer(),
-				new NezObjectMatcher());
+				new NezBraceMatcher());
 		painter.setColor(Display.getDefault().getSystemColor(SWT.COLOR_GRAY));
 		ITextViewerExtension2 extension = (ITextViewerExtension2) getSourceViewer();
 		extension.addPainter(painter);

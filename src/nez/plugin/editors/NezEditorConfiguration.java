@@ -3,6 +3,7 @@ package nez.plugin.editors;
 import nez.plugin.preference.PreferenceConstants;
 
 import org.eclipse.jface.text.DefaultTextHover;
+import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
@@ -113,5 +114,17 @@ public class NezEditorConfiguration extends SourceViewerConfiguration {
 				return false;
 			}
 		};
+	}
+	
+	@Override
+	public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String contentType) {
+		IAutoEditStrategy[] parentStrategies = super.getAutoEditStrategies(sourceViewer,
+				contentType);
+
+		IAutoEditStrategy[] myStrategies = new IAutoEditStrategy[parentStrategies.length + 1];
+		System.arraycopy(parentStrategies, 0, myStrategies, 0, parentStrategies.length);
+		myStrategies[myStrategies.length - 1] = new NezAutoEditStrategy();
+		return myStrategies;
+		
 	}
 }

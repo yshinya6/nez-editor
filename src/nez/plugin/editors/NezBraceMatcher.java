@@ -10,7 +10,7 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.ICharacterPairMatcher;
 
-public class NezObjectMatcher implements ICharacterPairMatcher {
+public class NezBraceMatcher implements ICharacterPairMatcher {
 
 	@Override
 	public void dispose() {
@@ -43,10 +43,30 @@ public class NezObjectMatcher implements ICharacterPairMatcher {
 				if (start >= 0) {
 					return new Region(start, 1);
 				}
+			} else if (offset > 0 && document.getChar(offset - 1) == '(') {
+				int end = document.get().indexOf(")", offset);
+				if (end >= 0) {
+					return new Region(end, 1);
+				}
+			} else if (document.getChar(offset) == ')') {
+				int start = document.get().lastIndexOf("(", offset);
+				if (start >= 0) {
+					return new Region(start, 1);
+				}
+			} else if (offset > 0 && document.getChar(offset - 1) == '<') {
+				int end = document.get().indexOf(">", offset);
+				if (end >= 0) {
+					return new Region(end, 1);
+				}
+			} else if (document.getChar(offset) == '>') {
+				int start = document.get().lastIndexOf("<", offset);
+				if (start >= 0) {
+					return new Region(start, 1);
+				}
 			}
 		} catch (BadLocationException e) {
 			ILog log = Activator.getDefault().getLog();
-			log.log(new Status(Status.WARNING, Activator.PLUGIN_ID, 0, "NezObjectMatcher#match() location error.", e));
+			log.log(new Status(Status.WARNING, Activator.PLUGIN_ID, 0, "NezBraceMatcher#match() location error.", e));
 		}
 			return null;
 	}
