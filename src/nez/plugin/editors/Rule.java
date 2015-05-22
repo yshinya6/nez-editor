@@ -95,7 +95,7 @@ class labelRule implements IRule {
 			do {
 				c = scanner.read();
 			} while ((isWordPart((char) c)));
-			//"="か"[e"を見つけられればルール名と判断する．
+			// "="か"[e"を見つけられればルール名と判断する．
 			scanner.unread();
 			do {
 				c = scanner.read();

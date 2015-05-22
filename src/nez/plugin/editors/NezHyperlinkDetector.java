@@ -19,7 +19,8 @@ public class NezHyperlinkDetector implements IHyperlinkDetector {
 
 	private int getLabelOffset(String source, String word) {
 		// d + "[ \n\t\r]*="
-		Pattern p = Pattern.compile("^[ \t]*" + word + "(\\s*\\[[^\\]]*\\])?"
+		Pattern p = Pattern.compile("^[ \t]*(public|inline)?[ \t]*" + word
+				+ "(\\s*\\[[^\\]]*\\])?"
 				+ "\\s*=", Pattern.MULTILINE);
 		Matcher m = p.matcher(source);
 		boolean matched = m.find();
