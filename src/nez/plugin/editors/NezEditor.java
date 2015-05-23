@@ -223,10 +223,13 @@ public class NezEditor extends TextEditor implements IPropertyChangeListener {
 			switch (report.getReportType()) {
 				case ERROR:
 					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+					break;
 				case WARNING:
 					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+					break;
 				case NOTICE:
 					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+					break;
 				default :
 					break;
 			}

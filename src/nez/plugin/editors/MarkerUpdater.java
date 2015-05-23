@@ -14,7 +14,7 @@ public class MarkerUpdater implements IMarkerUpdater {
 
 	@Override
 	public String getMarkerType() {
-		return "org.peg4d.editroplugin.markers";
+		return "nez.editor.markers";
 	}
 
 	@Override
