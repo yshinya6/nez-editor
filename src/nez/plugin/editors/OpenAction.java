@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 
-public class openAction implements IEditorActionDelegate {
+public class OpenAction implements IEditorActionDelegate {
 	private IEditorPart targetEditor = null;
 
 	@Override
@@ -53,11 +53,11 @@ public class openAction implements IEditorActionDelegate {
 
 	private int getLabelOffset(String source, String word) {
 		// d + "[ \n\t\r]*="
-		Pattern p = Pattern.compile("^[ \t]*" + word + "(\\s*\\[[^\\]]*\\])?"
+		Pattern p = Pattern.compile("^[ \t]*(public|inline)?(" + word + ")(\\s*\\[[^\\]]*\\])?"
 				+ "\\s*=", Pattern.MULTILINE);
 		Matcher m = p.matcher(source);
 		m.find();
-		return m.start();
+		return m.start(2);
 	}
 
 	@Override

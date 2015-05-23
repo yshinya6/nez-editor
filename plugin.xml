@@ -84,8 +84,8 @@
             id="NezEditorPlug-in.viewerContribution1"
             targetID="#TextEditorContext">
          <action
-               class="nez.plugin.editors.openAction"
-               id="nez.plugin.editors.openAction"
+               class="nez.plugin.editors.OpenAction"
+               id="nez.plugin.editors.OpenAction"
                label="Open Declaration"
                menubarPath="additions">
          </action>
@@ -101,11 +101,11 @@
    </extension>
    <extension
          id="nez.plugin.markers"
+         name="Occurence Marker"
          point="org.eclipse.core.resources.markers">
       <super
-            type="org.eclipse.core.resources.textmarker"/>
-            <super type="org.eclipse.core.resources.marker"/>
-      <persistent value="true"/>
+            type="org.eclipse.core.resources.textmarker">
+      </super>
    </extension>
    <extension
          point="org.eclipse.ui.editors.markerAnnotationSpecification">
@@ -138,6 +138,6 @@
 		extensions="*"
 		class="org.eclipse.ui.texteditor.ResourceMarkerAnnotationModelFactory">
 	</factory>
-   </extension>:
+   </extension>
    
 </plugin>

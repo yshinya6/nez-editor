@@ -20,13 +20,14 @@ public class NezContentAssistProcessor implements IContentAssistProcessor {
 			int offset) {
 		List<String> ruleNameList = new ArrayList<String>();
 		String source = viewer.getDocument().get();
-		Pattern p = Pattern.compile("^[ \t]*" + "([a-zA-Z][a-zA-Z0-9]*)"
+		Pattern p = Pattern.compile("^[ \t]*(public|inline)?[ \t]*" + "([a-zA-Z][a-zA-Z0-9]*)"
 				+ "(\\s*\\[[^\\]]*\\])?" + "\\s*=", Pattern.MULTILINE);
 
 		// create ruleName list
 		Matcher m = p.matcher(source);
 		while (m.find()) {
-			String ruleNamePart = m.group(1);
+			String ruleNamePart = m.group(2);
+			// int pos = m.start(2);
 			ruleNameList.add(ruleNamePart);
 		}
 
